@@ -39,6 +39,7 @@ packages = [
   "syn",
   "synstructure",
   "unicode-xid",
+  "wayland-sys",
 ]
 # Files that are ignored for all tidy and lint checks.
 files = [
