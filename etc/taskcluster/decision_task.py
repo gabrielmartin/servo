@@ -24,6 +24,9 @@ def main(task_for):
 
         # Implemented but disabled for now:
         linux_wpt = lambda: None  # Shadows the existing top-level function
+        # The magicleap build is broken until there's a surfman back end
+        magicleap_dev = lambda: None
+        magicleap_nightly = lambda: None
 
         all_tests = [
             linux_tidy_unit_docs,
