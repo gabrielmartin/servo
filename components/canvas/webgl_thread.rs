@@ -80,7 +80,6 @@ struct GLContextData {
 
 pub struct GLState {
     clear_color: (f32, f32, f32, f32),
-    clear_mask: gl::GLuint,
     scissor_test_enabled: bool,
     stencil_write_mask: (u32, u32),
     stencil_clear_value: i32,
@@ -93,7 +92,6 @@ impl Default for GLState {
     fn default() -> GLState {
         GLState {
             clear_color: (0., 0., 0., 0.),
-            clear_mask: gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT | gl::STENCIL_BUFFER_BIT,
             scissor_test_enabled: false,
             stencil_write_mask: (0, 0),
             stencil_clear_value: 0,
@@ -1023,7 +1021,6 @@ impl WebGLImpl {
                 gl::buffer_sub_data(gl, buffer_type, offset, &receiver.recv().unwrap())
             },
             WebGLCommand::Clear(mask) => {
-                state.clear_mask = mask;
                 gl.clear(mask);
             },
             WebGLCommand::ClearColor(r, g, b, a) => {
