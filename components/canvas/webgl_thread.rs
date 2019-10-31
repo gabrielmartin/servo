@@ -343,12 +343,9 @@ impl WebGLThread {
         command: WebGLCommand,
         backtrace: WebGLCommandBacktrace,
     ) {
-        match self.cached_context_info.get_mut(&context_id) {
-            Some(info) => {
-                info.received_webgl_command = true;
-            },
-            None => return,
-        };
+        if self.cached_context_info.get_mut(&context_id).is_none() {
+            return;
+        }
         let data = Self::make_current_if_needed_mut(
             &self.device,
             context_id,
@@ -541,7 +538,6 @@ impl WebGLThread {
             id,
             WebGLContextInfo {
                 image_key: Some(image_key),
-                received_webgl_command: false,
             },
         );
 
@@ -954,8 +950,6 @@ impl Drop for WebGLThread {
 struct WebGLContextInfo {
     /// Currently used WebRender image key.
     image_key: Option<webrender_api::ImageKey>,
-    /// True if the context received a WebGLCommand between two requestAnimationFrame
-    received_webgl_command: bool,
 }
 
 // TODO(pcwalton): Add `GL_TEXTURE_EXTERNAL_OES`?
