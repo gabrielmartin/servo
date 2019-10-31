@@ -171,6 +171,7 @@ impl webrender::OutputImageHandler for OutputHandler {
             .webrender_gl
             .fence_sync(gl::SYNC_GPU_COMMANDS_COMPLETE, 0);
         self.sync_objects.insert(id, gl_sync);
+        // https://github.com/servo/servo/issues/24615
         None
     }
 
